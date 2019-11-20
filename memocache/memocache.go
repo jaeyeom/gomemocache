@@ -12,9 +12,9 @@ type Value struct {
 	value interface{}
 }
 
-// LoadOrStore gets the value. If the value isn't ready it calls f to get the
-// value.
-func (e *Value) LoadOrStore(getValue func() interface{}) interface{} {
+// LoadOrCall gets the value. If the value isn't ready it calls getValue to get
+// the value.
+func (e *Value) LoadOrCall(getValue func() interface{}) interface{} {
 	e.once.Do(func() {
 		e.value = getValue()
 	})
@@ -38,7 +38,7 @@ type Map struct {
 // only one function is called. The key should be hashable.
 func (m *Map) LoadOrCall(key interface{}, getValue func() interface{}) interface{} {
 	e, _ := m.m.LoadOrStore(key, &Value{})
-	return e.(*Value).LoadOrStore(getValue)
+	return e.(*Value).LoadOrCall(getValue)
 }
 
 // Delete deletes the cache value for the key. Prior LoadOrCall() with the same
@@ -74,7 +74,7 @@ func findLeafNode(root *Map, path ...interface{}) *Map {
 // getRoot returns a root of the tree. If the map multi map is not used before,
 // a new root is created in a multi-goroutine-safe way.
 func (m *MultiLevelMap) getRoot() *Map {
-	return m.v.LoadOrStore(func() interface{} {
+	return m.v.LoadOrCall(func() interface{} {
 		return &Map{}
 	}).(*Map)
 }
