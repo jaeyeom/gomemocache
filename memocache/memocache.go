@@ -88,6 +88,7 @@ type MultiLevelMap struct {
 // For random replacement cache, you may call:
 //
 // 	const maxSize = 10000
+// 	var currentSize int32
 // 	m := NewMultiLevelMap(func() memocache.CacheInterface {
 // 		return NewRRCache(&currentSize, maxSize, maxSize/2, rand.Intn)
 // 	})
