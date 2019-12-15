@@ -1,6 +1,12 @@
 // Package memocache provides in memory cache that is safe for concurrent use by
 // multiple goroutines. It's meant to be used for expensive to compute or slow
 // to fetch values.
+//
+// There are a few interfaces defined in this package. MapInterface is an
+// interface to a map that is safe for concurrent use. A good example
+// implementation is sync.Map and this package implements LRUMap. CacheInterface
+// provides LoadOrCall function and it saves computation or RPC calls for the
+// same keys. Implementation of CacheInterface often use MapInterface.
 package memocache
 
 import (
