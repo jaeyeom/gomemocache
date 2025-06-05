@@ -1,0 +1,10 @@
+# Enable Bzlmod for every command
+common --enable_bzlmod
+
+# Test settings
+test --test_output=errors
+test --nobuild_tests_only
+
+# C++ settings (keeping them as they were in the reference)
+build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17

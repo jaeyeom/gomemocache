@@ -1,0 +1,32 @@
+# Bazel
+/bazel-*
+/.bzlbync*
+
+# Go
+# Compiled executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output directories (though Bazel uses bazel-bin, some Go tools might create these)
+/pkg/
+/bin/
+
+# IDE/Editor files
+.idea/
+.project
+.classpath
+*.launch
+.settings/
+.vscode/
+
+# Swap files
+*.swp
+*.swo
+*~
+
+# OS-specific
+.DS_Store
+Thumbs.db

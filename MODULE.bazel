@@ -1,0 +1,27 @@
+module(
+    name = "current_repo", # Renamed from the reference to avoid confusion
+    version = "0.1.0",
+)
+
+# Bazel rules for Go
+bazel_dep(name = "rules_go", version = "0.54.1", repo_name = "io_bazel_rules_go")
+
+# Configure Go version
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.24.3") # Using the same Go version as reference
+use_repo(go_sdk, "go_default_sdk")
+
+# Gazelle for generating BUILD files
+bazel_dep(name = "gazelle", version = "0.43.0")
+
+# Protocol Buffers (keeping as in reference, might be useful later)
+bazel_dep(name = "rules_proto", version = "7.1.0")
+
+# Protobuf (keeping as in reference)
+bazel_dep(name = "protobuf", version = "29.3")
+
+# Proto gRPC rules with Buf integration (keeping as in reference)
+bazel_dep(name = "rules_proto_grpc_buf", version = "5.1.0")
+
+# Register Go toolchains
+register_toolchains("@go_default_sdk//:all")
