@@ -1,0 +1,33 @@
+name: Bazel Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Run Bazel Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Bazel
+      uses: bazelbuild/setup-bazelisk@v3
+
+    - name: Mount Bazel cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/bazel
+        key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelrc', 'MODULE.bazel', 'go.mod', 'deps.bzl') }}
+        restore-keys: |
+          ${{ runner.os }}-bazel-
+
+    - name: Run tests
+      run: bazel test //...:all

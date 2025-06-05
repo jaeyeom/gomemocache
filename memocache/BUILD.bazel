@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "memocache",
+    srcs = ["memocache.go"],
+    importpath = "github.com/jaeyeom/gomemocache/memocache",
+    visibility = ["//visibility:public"],
+    # No external dependencies for the library code itself
+)
+
+go_test(
+    name = "memocache_test",
+    srcs = ["memocache_test.go"],
+    embed = [":memocache"],
+    deps = [
+        "@com_github_jaeyeom_sugo//par", # For "github.com/jaeyeom/sugo/par"
+    ],
+)

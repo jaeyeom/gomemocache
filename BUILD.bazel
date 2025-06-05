@@ -1,0 +1,29 @@
+load("@gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/jaeyeom/gomemocache
+# IMPORTANT: This prefix needs to be updated based on the go.mod file in the current project.
+# I will inspect go.mod and update this prefix in a subsequent step.
+# For now, I'll use a placeholder.
+# The reference repo used: github.com/jaeyeom/email-validator-grpc-mcp
+
+gazelle(
+    name = "gazelle",
+    command = "fix",
+    extra_args = [
+        "-build_file_name=BUILD.bazel",
+        "-repo_root=.",
+        "-go_naming_convention=go_default_library",
+        "-go_prefix=github.com/jaeyeom/gomemocache",
+    ],
+    prefix = "github.com/jaeyeom/gomemocache",
+)
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies", # This will create/update deps.bzl
+        "-prune",
+    ],
+    command = "update-repos",
+)
